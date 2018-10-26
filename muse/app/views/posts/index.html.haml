@@ -4,6 +4,8 @@
 	%p
 		Shared by
 		= post.user.name
+		
+	%p= pluralize(post.comments.count, "Comment")
 	
 
 = link_to "New Inspiration", new_post_path
