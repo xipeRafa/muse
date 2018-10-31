@@ -1,0 +1,96 @@
+rails new muse
+
+rails g model post title:string link:string description:text
+rake db:migrate
+
+rails g controller Posts
+routes.rb 
+    resources :posts
+    root "posts#index"
+posts_controller.rb 
+    def index
+    end
+
+
+rails g simple_form:install
+
+rails g devise:install
+
+rails g devise:views
+
+rails g devise User
+rake db:migrate
+user.rb
+   has_many :posts
+post.rb
+   belongs_to :user
+
+rails g migration add_user_id_to_post user_id:integer
+rake db:migrate
+
+rails c
+@post = Post.last
+@post.user_id = 1
+@post.save
+
+rails g migration add_name_to_user name:string
+rake db:migrate
+
+rails g paperclip post image
+rake db:migrate
+
+
+rails g model comment content:text post:references user:references
+rake db:migrate
+post.rb
+    has_many :comments
+user.rb
+    has_many :comments
+routes.rb
+    resources :posts do
+       resources :comments
+    end
+
+
+rails g controller comments
+
+rails g acts_as_votable:migration
+rake db:migrate
+post.rb
+   acts_as_votable
+routes.rb
+  resources :posts do
+    member do
+        get "like", to: "posts#upvote"
+        get "dislike", to: "posts#downvote"
+    end
+    resources :comments
+    end
+  root 'posts#index'
+end
+
+
+
+
+
+Gemfile
+
+gem 'haml', '~> 5.0', '>= 5.0.1'
+gem 'simple_form', '~> 3.5'
+gem 'devise', '~> 4.3'
+gem 'paperclip', '~> 5.1'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
