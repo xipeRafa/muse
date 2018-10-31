@@ -6,8 +6,9 @@ class PostsController < ApplicationController
 		@posts = Post.all.order("created_at DESC")
 	end
 
-    def show
-        @comments = Comment.where(post_id: @post)
+        def show
+		@comments = Comment.where(post_id: @post)
+		@random_post = Post.where.not(id: @post).order("RANDOM()").first
 	end
 
 	def new
@@ -42,13 +43,13 @@ class PostsController < ApplicationController
 
 	def upvote
 		@post.upvote_by current_user
-		redirect_to root_path
+		redirect_to @post
 	end
 
 	def downvote
 		@post.downvote_from current_user
-		redirect_to root_path
-end
+		redirect_to @post
+        end
 
 	private
 
