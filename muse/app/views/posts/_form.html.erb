@@ -1,0 +1,22 @@
+<%= simple_form_for @post do |f| %>
+
+<% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@post.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.input :image %>
+  <%= f.input :title %>
+  <%= f.input :link %>
+  <%= f.input :description %>
+  <%= f.button :submit, class: "button" %>
+<% end %>
